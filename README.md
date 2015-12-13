@@ -27,8 +27,8 @@ example
 
     $ psql
     CREATE FOREIGN TABLE examplelog(
-            level text,
-           message text
+            level TEXT,
+           message TEXT
     ) SERVER logfile_fdw OPTIONS (
             -- log line pattern regex. use named groups.
             log_pattern '(?P<level>[^ ]*) (?P<message>.*)',
@@ -78,18 +78,18 @@ You can use the following shortcut name to log pattern.
 
     $ psql
     CREATE FOREIGN TABLE apachelog(
-            host text,
-            ident text,
-            remote_user text,
-            time text,
-            method text,
-            url text,
-            proto text,
-            status text,
-            bytes text,
-            referer text,
-            agent text
-    ) server logfile_fdw options (
+            host TEXT,
+            ident TEXT,
+            remote_user TEXT,
+            time TEXT,
+            method TEXT,
+            url TEXT,
+            proto TEXT,
+            status TEXT,
+            bytes TEXT,
+            referer TEXT,
+            agent TEXT
+    ) SERVER logfile_fdw OPTIONS (
             log_pattern 'apache_combined',
             file_pattern '/var/log/httpd/access_log*'
     );
