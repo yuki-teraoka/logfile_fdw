@@ -7,7 +7,7 @@ install
 ---------------------
 
     % sudo pip install pgxnclient
-    % sudo pip install git+https://github.com/yuki-teraoka/logfile_fdw.git
+    % sudo pip install -e "git+https://github.com/yuki-teraoka/logfile_fdw.git"
     % sudo pgxn install multicorn
 
 
@@ -15,11 +15,11 @@ setup extention and server
 ---------------------
 
     % psql
-    # CREATE EXTENSION multicorn;
-    # 
-    # CREATE SERVER logfile_fdw FOREIGN DATA WRAPPER multicorn options (
-    #         wrapper 'logfile_fdw.LogFileForeignDataWrapper'
-    # );
+    CREATE EXTENSION multicorn;
+    
+    CREATE SERVER logfile_fdw FOREIGN DATA WRAPPER multicorn options (
+            wrapper 'logfile_fdw.LogFileForeignDataWrapper'
+    );
 
 
 example
