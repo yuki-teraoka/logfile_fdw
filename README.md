@@ -31,7 +31,7 @@ example
            message text
     ) SERVER logfile_fdw OPTIONS (
             -- log line pattern regex. use named groups.
-            log_pattern '(?P<level>[^ ]*) (?P<message>.*)',
+            log_pattern '(?P\<level\>[^ ]*) (?P\<message\>.*)',
             -- log file glob pattern. 
             file_pattern '/tmp/example*'
     );
@@ -44,10 +44,10 @@ example
     
     \q
 
-    % echo "INFO message1" >> /tmp/example1
-    % echo "INFO message2" >> /tmp/example1
-    % echo "WARN message3" >> /tmp/example2
-    % echo "ERROR message4" >> /tmp/example2
+    % echo "INFO message1" \>\> /tmp/example1
+    % echo "INFO message2" \>\> /tmp/example1
+    % echo "WARN message3" \>\> /tmp/example2
+    % echo "ERROR message4" \>\> /tmp/example2
 
     % psql
     SELECT * FROM examplelog;
@@ -68,12 +68,12 @@ You can use the following shortcut name to log pattern.
 
 | pattern name              | logformat   | regex       |
 |:--------------------------|:------------|:------------|
-| apache_common             | LogFormat "%h %l %u %t \"%r\" %>s %b" common                                                  | (?P<host>[^ ]*) (?P<ident>[^ ]*) (?P<remote_user>[^ ]*) \\[(?P<time>[^]]*)\\] "(?P<method>[^ ]*)(?: *(?P<url>[^ ]*) *(?P<proto>[^ ]*))?" (?P<status>[^ ]*) (?P<bytes>[^ ]*) |
-| apache_combined           | LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined             | (?P<host>[^ ]*) (?P<ident>[^ ]*) (?P<remote_user>[^ ]*) \\[(?P<time>[^]]*)\\] "(?P<method>[^ ]*)(?: *(?P<url>[^ ]*) *(?P<proto>[^ ]*))?" (?P<status>[^ ]*) (?P<bytes>[^ ]*) "(?P<referer>.*?)" "(?P<agent>.*?)" |
-| apache_combined_io        | LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio     | (?P<host>[^ ]*) (?P<ident>[^ ]*) (?P<remote_user>[^ ]*) \\[(?P<time>[^]]*)\\] "(?P<method>[^ ]*)(?: *(?P<url>[^ ]*) *(?P<proto>[^ ]*))?" (?P<status>[^ ]*) (?P<bytes>[^ ]*) "(?P<referer>.*?)" "(?P<agent>.*?)" (?P<input_bytes>[^ ]*) (?P<output_bytes>[^ ]*) |
-| apache_vhost_common       | LogFormat "%v %h %l %u %t \"%r\" %>s %b" vcommon                                              | (?P<vhost>[^ ]*) (?P<host>[^ ]*) (?P<ident>[^ ]*) (?P<remote_user>[^ ]*) \\[(?P<time>[^]]*)\\] "(?P<method>[^ ]*)(?: *(?P<url>[^ ]*) *(?P<proto>[^ ]*))?" (?P<status>[^ ]*) (?P<bytes>[^ ]*) |
-| apache_vhost_combined     | LogFormat "%v %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" vcombined         | (?P<vhost>[^ ]*) (?P<host>[^ ]*) (?P<ident>[^ ]*) (?P<remote_user>[^ ]*) \\[(?P<time>[^]]*)\\] "(?P<method>[^ ]*)(?: *(?P<url>[^ ]*) *(?P<proto>[^ ]*))?" (?P<status>[^ ]*) (?P<bytes>[^ ]*) "(?P<referer>.*?)" "(?P<agent>.*?)" |
-| apache_vhost_combined_io  | LogFormat "%v %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" vcombinedio | (?P<vhost>[^ ]*) (?P<host>[^ ]*) (?P<ident>[^ ]*) (?P<remote_user>[^ ]*) \\[(?P<time>[^]]*)\\] "(?P<method>[^ ]*)(?: *(?P<url>[^ ]*) *(?P<proto>[^ ]*))?" (?P<status>[^ ]*) (?P<bytes>[^ ]*) "(?P<referer>.*?)" "(?P<agent>.*?)" (?P<input_bytes>[^ ]*) (?P<output_bytes>[^ ]*)' |
+| apache_common             | LogFormat "%h %l %u %t \"%r\" %\>s %b" common                                                  | (?P\<host\>[^ ]*) (?P\<ident\>[^ ]*) (?P\<remote_user\>[^ ]*) \\[(?P\<time\>[^]]*)\\] "(?P\<method\>[^ ]*)(?: *(?P\<url\>[^ ]*) *(?P\<proto\>[^ ]*))?" (?P\<status\>[^ ]*) (?P\<bytes\>[^ ]*) |
+| apache_combined           | LogFormat "%h %l %u %t \"%r\" %\>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined             | (?P\<host\>[^ ]*) (?P\<ident\>[^ ]*) (?P\<remote_user\>[^ ]*) \\[(?P\<time\>[^]]*)\\] "(?P\<method\>[^ ]*)(?: *(?P\<url\>[^ ]*) *(?P\<proto\>[^ ]*))?" (?P\<status\>[^ ]*) (?P\<bytes\>[^ ]*) "(?P\<referer\>.*?)" "(?P\<agent\>.*?)" |
+| apache_combined_io        | LogFormat "%h %l %u %t \"%r\" %\>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio     | (?P\<host\>[^ ]*) (?P\<ident\>[^ ]*) (?P\<remote_user\>[^ ]*) \\[(?P\<time\>[^]]*)\\] "(?P\<method\>[^ ]*)(?: *(?P\<url\>[^ ]*) *(?P\<proto\>[^ ]*))?" (?P\<status\>[^ ]*) (?P\<bytes\>[^ ]*) "(?P\<referer\>.*?)" "(?P\<agent\>.*?)" (?P\<input_bytes\>[^ ]*) (?P\<output_bytes\>[^ ]*) |
+| apache_vhost_common       | LogFormat "%v %h %l %u %t \"%r\" %\>s %b" vcommon                                              | (?P\<vhost\>[^ ]*) (?P\<host\>[^ ]*) (?P\<ident\>[^ ]*) (?P\<remote_user\>[^ ]*) \\[(?P\<time\>[^]]*)\\] "(?P\<method\>[^ ]*)(?: *(?P\<url\>[^ ]*) *(?P\<proto\>[^ ]*))?" (?P\<status\>[^ ]*) (?P\<bytes\>[^ ]*) |
+| apache_vhost_combined     | LogFormat "%v %h %l %u %t \"%r\" %\>s %b \"%{Referer}i\" \"%{User-Agent}i\"" vcombined         | (?P\<vhost\>[^ ]*) (?P\<host\>[^ ]*) (?P\<ident\>[^ ]*) (?P\<remote_user\>[^ ]*) \\[(?P\<time\>[^]]*)\\] "(?P\<method\>[^ ]*)(?: *(?P\<url\>[^ ]*) *(?P\<proto\>[^ ]*))?" (?P\<status\>[^ ]*) (?P\<bytes\>[^ ]*) "(?P\<referer\>.*?)" "(?P\<agent\>.*?)" |
+| apache_vhost_combined_io  | LogFormat "%v %h %l %u %t \"%r\" %\>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" vcombinedio | (?P\<vhost\>[^ ]*) (?P\<host\>[^ ]*) (?P\<ident\>[^ ]*) (?P\<remote_user\>[^ ]*) \\[(?P\<time\>[^]]*)\\] "(?P\<method\>[^ ]*)(?: *(?P\<url\>[^ ]*) *(?P\<proto\>[^ ]*))?" (?P\<status\>[^ ]*) (?P\<bytes\>[^ ]*) "(?P\<referer\>.*?)" "(?P\<agent\>.*?)" (?P\<input_bytes\>[^ ]*) (?P\<output_bytes\>[^ ]*)' |
 
 
     % psql
