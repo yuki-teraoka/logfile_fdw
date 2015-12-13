@@ -49,7 +49,7 @@ example
     $ echo "WARN message3" >> /tmp/example2
     $ echo "ERROR message4" >> /tmp/example2
 
-    % psql
+    $ psql
     SELECT * FROM examplelog;
     
      level | message
@@ -93,3 +93,4 @@ You can use the following shortcut name to log pattern.
             log_pattern 'apache_combined',
             file_pattern '/var/log/httpd/access_log*'
     );
+
