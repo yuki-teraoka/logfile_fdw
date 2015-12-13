@@ -31,7 +31,7 @@ example
            message text
     ) SERVER logfile_fdw OPTIONS (
             -- log line pattern regex. use named groups.
-            log_pattern '(?P\<level\>[^ ]*) (?P\<message\>.*)',
+            log_pattern '(?P<level>[^ ]*) (?P<message>.*)',
             -- log file glob pattern. 
             file_pattern '/tmp/example*'
     );
@@ -44,10 +44,10 @@ example
     
     \q
 
-    % echo "INFO message1" \>\> /tmp/example1
-    % echo "INFO message2" \>\> /tmp/example1
-    % echo "WARN message3" \>\> /tmp/example2
-    % echo "ERROR message4" \>\> /tmp/example2
+    % echo "INFO message1" >> /tmp/example1
+    % echo "INFO message2" >> /tmp/example1
+    % echo "WARN message3" >> /tmp/example2
+    % echo "ERROR message4" >> /tmp/example2
 
     % psql
     SELECT * FROM examplelog;
