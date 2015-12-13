@@ -7,7 +7,7 @@ install
 ---------------------
 
     % sudo pip install pgxnclient
-    % sudo pip install -e "git+https://github.com/yuki-teraoka/logfile_fdw.git"
+    % sudo pip install git+https://github.com/yuki-teraoka/logfile_fdw.git
     % sudo pgxn install multicorn
 
 
