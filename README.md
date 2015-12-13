@@ -11,7 +11,7 @@ install
     % sudo pgxn install multicorn
 
 
-setup extention and server
+create extention and server
 ---------------------
 
     % psql
