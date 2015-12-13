@@ -6,15 +6,15 @@ postgresql foreign data wrapper for any log files.
 install
 ---------------------
 
-    % sudo pip install pgxnclient
-    % sudo pip install git+https://github.com/yuki-teraoka/logfile_fdw.git
-    % sudo pgxn install multicorn
+    $ sudo pip install pgxnclient
+    $ sudo pip install git+https://github.com/yuki-teraoka/logfile_fdw.git
+    $ sudo pgxn install multicorn
 
 
 create extention and server
 ---------------------
 
-    % psql
+    $ psql
     CREATE EXTENSION multicorn;
     
     CREATE SERVER logfile_fdw FOREIGN DATA WRAPPER multicorn options (
@@ -25,7 +25,7 @@ create extention and server
 example
 ---------------------
 
-    % psql
+    $ psql
     CREATE FOREIGN TABLE examplelog(
             level text,
            message text
@@ -44,10 +44,10 @@ example
     
     \q
 
-    % echo "INFO message1" >> /tmp/example1
-    % echo "INFO message2" >> /tmp/example1
-    % echo "WARN message3" >> /tmp/example2
-    % echo "ERROR message4" >> /tmp/example2
+    $ echo "INFO message1" >> /tmp/example1
+    $ echo "INFO message2" >> /tmp/example1
+    $ echo "WARN message3" >> /tmp/example2
+    $ echo "ERROR message4" >> /tmp/example2
 
     % psql
     SELECT * FROM examplelog;
@@ -76,7 +76,7 @@ You can use the following shortcut name to log pattern.
 | apache_vhost_combined_io  | LogFormat "%v %h %l %u %t \"%r\" %\>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" vcombinedio | (?P\<vhost\>[^ ]\*) (?P\<host\>[^ ]\*) (?P\<ident\>[^ ]\*) (?P\<remote_user\>[^ ]\*) \\[(?P\<time\>[^]]\*)\\] "(?P\<method\>[^ ]\*)(?: \*(?P\<url\>[^ ]\*) \*(?P\<proto\>[^ ]\*))?" (?P\<status\>[^ ]\*) (?P\<bytes\>[^ ]\*) "(?P\<referer\>.\*?)" "(?P\<agent\>.\*?)" (?P\<input_bytes\>[^ ]\*) (?P\<output_bytes\>[^ ]\*)' |
 
 
-    % psql
+    $ psql
     CREATE FOREIGN TABLE apachelog(
             host text,
             ident text,
