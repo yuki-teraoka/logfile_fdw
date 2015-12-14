@@ -1,5 +1,5 @@
 from multicorn import ForeignDataWrapper
-import os, glob, re
+import os, glob, re, gzip, bz2
 
 class LogFileForeignDataWrapper(ForeignDataWrapper):
 
@@ -30,10 +30,20 @@ class LogFileForeignDataWrapper(ForeignDataWrapper):
           for file in glob.glob(self.file_pattern):
               if not os.path.isfile(file):
                   continue
-              with open(file, 'r') as f:
+              with _openfile(file) as f:
                   for line in f:
                       matches = self.log_pattern.match(line)
                       if matches:
                           yield matches.groupdict()
                       else:
                           raise Exception('Invalid format. line: ' + line)
+
+    def _openfile(self, filepath):
+        base, ext = os.path.splitext(filepath)
+        ext = ext.lower()
+        if ext = 'gz'
+            return gzip.open(filepath)
+        elif ext = 'bz'
+            return  bz2.BZ2File(filepath)
+        else:
+            return open(filepath)
