@@ -11,12 +11,12 @@ class LogFileForeignDataWrapper(ForeignDataWrapper):
     APACHE_VHOST_COMBINED_IO_LOG_FORMAT = APACHE_VHOST_COMBINED_LOG_FORMAT + ' (?P<input_bytes>[^ ]*) (?P<output_bytes>[^ ]*)'
 
     defaultFormat = {
-      'apache_common': re.compile(APACHE_COMMON_LOG_FORMAT),
-      'apache_vhost_common': re.compile(APACHE_VHOST_COMMON_LOG_FORMAT),
-      'apache_combined': re.compile(APACHE_COMBINED_LOG_FORMAT),
-      'apache_vhost_combined': re.compile(APACHE_VHOST_COMBINED_LOG_FORMAT),
-      'apache_combined_io': re.compile(APACHE_COMBINED_IO_LOG_FORMAT),
-      'apache_vhost_combined_io': re.compile(APACHE_VHOST_COMBINED_IO_LOG_FORMAT)
+        'apache_common': re.compile(APACHE_COMMON_LOG_FORMAT),
+        'apache_vhost_common': re.compile(APACHE_VHOST_COMMON_LOG_FORMAT),
+        'apache_combined': re.compile(APACHE_COMBINED_LOG_FORMAT),
+        'apache_vhost_combined': re.compile(APACHE_VHOST_COMBINED_LOG_FORMAT),
+        'apache_combined_io': re.compile(APACHE_COMBINED_IO_LOG_FORMAT),
+        'apache_vhost_combined_io': re.compile(APACHE_VHOST_COMBINED_IO_LOG_FORMAT)
     }
 
     def __init__(self, options, columns):
@@ -30,9 +30,10 @@ class LogFileForeignDataWrapper(ForeignDataWrapper):
           for file in glob.glob(self.file_pattern):
               if not os.path.isfile(file):
                   continue
-              for line in open(file):
-                  matches = self.log_pattern.match(line)
-                  if matches:
-                      yield matches.groupdict()
-                  else:
-                      raise Exception('Invalid format. line: ' + line)
+              with open(file) as f:
+                  for line in f
+                      matches = self.log_pattern.match(line)
+                      if matches:
+                          yield matches.groupdict()
+                      else:
+                          raise Exception('Invalid format. line: ' + line)
