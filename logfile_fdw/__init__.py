@@ -31,7 +31,7 @@ class LogFileForeignDataWrapper(ForeignDataWrapper):
               if not os.path.isfile(file):
                   continue
               with open(file, 'r') as f:
-                  for line in f
+                  for line in f:
                       matches = self.log_pattern.match(line)
                       if matches:
                           yield matches.groupdict()
