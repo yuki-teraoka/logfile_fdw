@@ -30,7 +30,7 @@ class LogFileForeignDataWrapper(ForeignDataWrapper):
           for file in glob.glob(self.file_pattern):
               if not os.path.isfile(file):
                   continue
-              with open(file) as f:
+              with open(file, 'r') as f:
                   for line in f
                       matches = self.log_pattern.match(line)
                       if matches:
